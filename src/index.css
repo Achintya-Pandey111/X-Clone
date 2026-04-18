@@ -751,3 +751,61 @@ nav {
 .save-btn:hover {
   opacity: 0.9;
 }
+
+/* Notifications Styling */
+.notifications-container {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.notification-item {
+  display: flex;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.notification-item:hover {
+  background-color: var(--hover-bg);
+}
+
+.notification-icon {
+  font-size: 24px;
+  margin-right: 12px;
+  width: 40px;
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 4px;
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-text {
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--text-primary);
+}
+
+.notification-text .bold {
+  font-weight: 700;
+}
+
+.notification-time {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.avatar-placeholder.small {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 8px;
+}

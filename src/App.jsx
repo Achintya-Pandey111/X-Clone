@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Sidebar from './components/Sidebar';
 import Feed from './components/Feed';
 import Widgets from './components/Widgets';
 import Register from './components/Register';
+import Notifications from './components/Notifications';
 import { useAuth } from './AuthContext';
 
 function App() {
   const { user } = useAuth();
+  const [activeTab, setActiveTab] = useState('home');
 
   if (!user) {
     return <Register />;
@@ -14,9 +16,9 @@ function App() {
 
   return (
     <div className="app">
-      <Sidebar />
+      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
       <main className="feed">
-        <Feed />
+        {activeTab === 'home' ? <Feed /> : <Notifications />}
       </main>
       <aside className="widgets">
         <Widgets />

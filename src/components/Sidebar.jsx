@@ -9,13 +9,12 @@ const SidebarItem = ({ label, active, icon, onClick }) => (
   </div>
 );
 
-function Sidebar() {
+function Sidebar({ activeTab, setActiveTab }) {
   const { user, logout } = useAuth();
   const [showLogout, setShowLogout] = useState(false);
   const [showEditProfile, setShowEditProfile] = useState(false);
 
   const icons = {
-    // ... (icons remain the same)
     home: <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12 9c-2.209 0-4 1.791-4 4s1.791 4 4 4 4-1.791 4-4-1.791-4-4-4zm0 6c-1.105 0-2-.895-2-2s.895-2 2-2 2 .895 2 2-.895 2-2 2zm0-13.304L.622 8.807l1.06 1.346L3 9.146V21c0 .553.448 1 1 1h16c.552 0 1-.447 1-1V9.147l1.318 1.005 1.06-1.347L12 1.696zM19 20H5V7.571l7-5.334 7 5.334V20z"/></svg>,
     explore: <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M11.83 2.14l-.06-.01c-1.3-.12-2.58.11-3.76.66-1.18.54-2.21 1.39-2.98 2.45-1.55 2.11-2.02 4.77-1.31 7.27l1.93-.52c-.54-1.92-.18-3.95 1.01-5.57.59-.81 1.38-1.46 2.29-1.87 1.03-.47 2.16-.59 3.25-.43l.87-1.98zM19.1 5.35c-2.42-2.42-5.71-3.52-8.99-3.03l.29 1.98c2.72-.4 5.45.51 7.45 2.51l-1.41 1.41 6.36 1.42-1.41-6.36-2.29 2.07zM12 22.25c-5.65 0-10.25-4.6-10.25-10.25 0-1.24.22-2.45.66-3.6l1.87.71c-.34.89-.53 1.83-.53 2.89 0 4.55 3.7 8.25 8.25 8.25s8.25-3.7 8.25-8.25c0-1.06-.19-2.01-.53-2.89l1.87-.71c.44 1.15.66 2.36.66 3.6 0 5.65-4.6 10.25-10.25 10.25z"/></svg>,
     notifications: <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M19.993 19.04a.997.997 0 0 1-1 1H5.006a.997.997 0 0 1-1-1v-1.71L5.88 15.46a2.97 2.97 0 0 0 .86-2.07V9a5.26 5.26 0 0 1 5.25-5.25A5.26 5.26 0 0 1 17.25 9v4.39a2.97 2.97 0 0 0 .86 2.07l1.875 1.87v1.71zM17.25 18H6.756l-.875-.875a.997.997 0 0 1-.29-.7V15.42a4.97 4.97 0 0 1 1.414-3.535L8.5 10.38V9a3.25 3.25 0 0 1 6.5 0v1.38l1.495 1.505a4.97 4.97 0 0 1 1.414 3.535v1.006a.997.997 0 0 1-.293.7L17.25 18zm-5.25 4c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2z"/></svg>,
@@ -29,15 +28,25 @@ function Sidebar() {
 
   return (
     <div className="sidebar-content">
-      <div className="logo">
+      <div className="logo" onClick={() => setActiveTab('home')} style={{ cursor: 'pointer' }}>
         <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/>
         </svg>
       </div>
       <nav>
-        <SidebarItem label="Home" active icon={icons.home} />
+        <SidebarItem 
+          label="Home" 
+          active={activeTab === 'home'} 
+          icon={icons.home} 
+          onClick={() => setActiveTab('home')} 
+        />
         <SidebarItem label="Explore" icon={icons.explore} />
-        <SidebarItem label="Notifications" icon={icons.notifications} />
+        <SidebarItem 
+          label="Notifications" 
+          active={activeTab === 'notifications'} 
+          icon={icons.notifications} 
+          onClick={() => setActiveTab('notifications')} 
+        />
         <SidebarItem label="Messages" icon={icons.messages} />
         <SidebarItem label="Lists" icon={icons.lists} />
         <SidebarItem label="Communities" icon={icons.communities} />
