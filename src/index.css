@@ -554,3 +554,23 @@ nav {
 .link:hover {
   text-decoration: underline;
 }
+
+.logout-popup {
+  position: absolute;
+  bottom: 70px;
+  left: 12px;
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  border-radius: 12px;
+  width: 200px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  z-index: 20;
+}
+
+.logout-popup:hover {
+  background-color: var(--hover-bg);
+}

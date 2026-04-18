@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useAuth } from '../AuthContext';
 
 const SidebarItem = ({ label, active, icon }) => (
   <div className={`sidebar-item ${active ? 'active' : ''}`}>
@@ -8,6 +9,9 @@ const SidebarItem = ({ label, active, icon }) => (
 );
 
 function Sidebar() {
+  const { user, logout } = useAuth();
+  const [showLogout, setShowLogout] = useState(false);
+
   const icons = {
     home: <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12 9c-2.209 0-4 1.791-4 4s1.791 4 4 4 4-1.791 4-4-1.791-4-4-4zm0 6c-1.105 0-2-.895-2-2s.895-2 2-2 2 .895 2 2-.895 2-2 2zm0-13.304L.622 8.807l1.06 1.346L3 9.146V21c0 .553.448 1 1 1h16c.552 0 1-.447 1-1V9.147l1.318 1.005 1.06-1.347L12 1.696zM19 20H5V7.571l7-5.334 7 5.334V20z"/></svg>,
     explore: <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M11.83 2.14l-.06-.01c-1.3-.12-2.58.11-3.76.66-1.18.54-2.21 1.39-2.98 2.45-1.55 2.11-2.02 4.77-1.31 7.27l1.93-.52c-.54-1.92-.18-3.95 1.01-5.57.59-.81 1.38-1.46 2.29-1.87 1.03-.47 2.16-.59 3.25-.43l.87-1.98zM19.1 5.35c-2.42-2.42-5.71-3.52-8.99-3.03l.29 1.98c2.72-.4 5.45.51 7.45 2.51l-1.41 1.41 6.36 1.42-1.41-6.36-2.29 2.07zM12 22.25c-5.65 0-10.25-4.6-10.25-10.25 0-1.24.22-2.45.66-3.6l1.87.71c-.34.89-.53 1.83-.53 2.89 0 4.55 3.7 8.25 8.25 8.25s8.25-3.7 8.25-8.25c0-1.06-.19-2.01-.53-2.89l1.87-.71c.44 1.15.66 2.36.66 3.6 0 5.65-4.6 10.25-10.25 10.25z"/></svg>,
@@ -40,13 +44,21 @@ function Sidebar() {
       </nav>
       <button className="post-btn">Post</button>
       
-      <div className="profile-mini">
-        <div className="avatar-placeholder" style={{ backgroundColor: '#1d9bf0' }}></div>
+      <div className="profile-mini" onClick={() => setShowLogout(!showLogout)}>
+        <div className="avatar-placeholder" style={{ backgroundColor: '#1d9bf0' }}>
+          {user?.name?.[0].toUpperCase()}
+        </div>
         <div className="profile-info">
-          <div className="name">Antigravity AI</div>
-          <div className="handle">@antigravity</div>
+          <div className="name">{user?.name}</div>
+          <div className="handle">@{user?.email.split('@')[0]}</div>
         </div>
         <div style={{ marginLeft: 'auto', color: 'var(--text-secondary)' }}>•••</div>
+        
+        {showLogout && (
+          <div className="logout-popup" onClick={(e) => { e.stopPropagation(); logout(); }}>
+            Log out @{user?.email.split('@')[0]}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,6 +1,8 @@
 import React from 'react';
+import { useAuth } from '../AuthContext';
 
 const Post = ({ user, handle, content, timestamp, stats }) => (
+  // ... (Post component code)
   <div className="post-skeleton" style={{ animation: 'none' }}>
     <div className="post-avatar" style={{ backgroundColor: '#555' }}></div>
     <div className="post-content">
@@ -30,6 +32,7 @@ const Post = ({ user, handle, content, timestamp, stats }) => (
 );
 
 function Feed() {
+  const { user } = useAuth();
   const posts = [
     {
       user: 'SpaceX',
@@ -62,7 +65,9 @@ function Feed() {
       </header>
       
       <div className="composer">
-        <div className="avatar-placeholder" style={{ backgroundColor: '#1d9bf0' }}></div>
+        <div className="avatar-placeholder" style={{ backgroundColor: '#1d9bf0', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold' }}>
+          {user?.name?.[0].toUpperCase()}
+        </div>
         <div className="composer-input">What is happening?!</div>
         <button className="post-btn-small">Post</button>
       </div>
