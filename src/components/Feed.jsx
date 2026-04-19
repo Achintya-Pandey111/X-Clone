@@ -50,6 +50,47 @@ function Feed() {
     }));
   };
 
+  const [postText, setPostText] = useState('');
+
+  const handlePost = (e) => {
+    e.preventDefault();
+    if (!postText.trim()) return;
+    
+    const newPost = {
+      id: posts.length + 1,
+      user: currentUser?.name || 'Guest',
+      handle: `@${currentUser?.email?.split('@')[0] || 'guest'}`,
+      content: postText,
+      timestamp: 'now',
+      stats: { replies: '0', retweets: '0', likes: 0, views: '0', isLiked: false }
+    };
+    
+    setPosts([newPost, ...posts]);
+    setPostText('');
+  };
+
+  const loadMorePosts = () => {
+    const morePosts = [
+      {
+        id: posts.length + 1,
+        user: 'NASA',
+        handle: '@NASA',
+        content: 'Hubble captures a stunning view of a distant galaxy!',
+        timestamp: '10h',
+        stats: { replies: '5K', retweets: '15K', likes: 85000, views: '5.2M', isLiked: false }
+      },
+      {
+        id: posts.length + 2,
+        user: 'TechCrunch',
+        handle: '@TechCrunch',
+        content: 'New startup raises $50M to build AI-powered coding assistants.',
+        timestamp: '12h',
+        stats: { replies: '200', retweets: '1.2K', likes: 5000, views: '800K', isLiked: false }
+      }
+    ];
+    setPosts([...posts, ...morePosts]);
+  };
+
   return (
     <div className="feed-container">
       <header className="feed-header">
@@ -67,19 +108,46 @@ function Feed() {
         </div>
       </header>
       
-      <div className="composer">
+      <form className="composer" onSubmit={handlePost}>
         <div className="avatar-placeholder" style={{ backgroundColor: '#1d9bf0', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold' }}>
           {currentUser?.name?.[0].toUpperCase() || 'U'}
         </div>
-        <div className="composer-input">What is happening?!</div>
-        <button className="post-btn-small">Post</button>
-      </div>
+        <div className="composer-input-container" style={{ flex: 1 }}>
+          <textarea 
+            className="composer-textarea" 
+            placeholder="What is happening?!"
+            value={postText}
+            onChange={(e) => setPostText(e.target.value)}
+            style={{ 
+              width: '100%', 
+              background: 'transparent', 
+              border: 'none', 
+              color: 'var(--text-primary)', 
+              fontSize: '20px', 
+              outline: 'none',
+              resize: 'none',
+              fontFamily: 'inherit'
+            }}
+          />
+          <div className="composer-actions" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px', borderTop: '1px solid var(--border)', paddingTop: '12px' }}>
+            <div className="composer-icons" style={{ color: 'var(--accent)', display: 'flex', gap: '12px' }}>
+              <span>🖼️</span> <span>📊</span> <span>😀</span> <span>📍</span>
+            </div>
+            <button type="submit" className="post-btn-small" disabled={!postText.trim()}>Post</button>
+          </div>
+        </div>
+      </form>
 
       {activeTab === 'for-you' ? (
         <div className="posts-list">
           {posts.map((post) => (
             <Post key={post.id} {...post} onLike={handleLike} />
           ))}
+          
+          <div className="show-more-posts" onClick={loadMorePosts} style={{ padding: '16px', textAlign: 'center', color: 'var(--accent)', cursor: 'pointer', borderBottom: '1px solid var(--border)' }}>
+            Show more posts
+          </div>
+
           {/* Skeletons for the "rest" of the feed */}
           <div className="post-skeleton">
             <div className="post-avatar"></div>

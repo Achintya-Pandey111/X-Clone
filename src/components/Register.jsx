@@ -97,6 +97,11 @@ const Register = () => {
                 {isLogin ? 'Sign up' : 'Log in'}
               </span>
             </p>
+            <p style={{ marginTop: '16px', borderTop: '1px solid var(--border)', paddingTop: '16px', textAlign: 'center' }}>
+              <span className="link" style={{ fontWeight: 'bold' }} onClick={() => login({ name: 'Guest', email: 'guest@x.com' })}>
+                View all posts without an account
+              </span>
+            </p>
           </div>
         </div>
       </div>

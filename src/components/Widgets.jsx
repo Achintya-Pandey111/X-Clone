@@ -63,7 +63,7 @@ function Widgets() {
           <TrendItem category="Entertainment" title="New Movie" posts="102K" />
           <TrendItem category="Sports" title="Grand Prix" posts="8K" />
         </div>
-        <div className="show-more" style={{ padding: '16px', borderBottomLeftRadius: '16px', borderBottomRightRadius: '16px', transition: 'background-color 0.2s' }}>
+        <div className="show-more" onClick={() => alert('Viewing all trending posts...')} style={{ padding: '16px', borderBottomLeftRadius: '16px', borderBottomRightRadius: '16px', transition: 'background-color 0.2s' }}>
           Show more
         </div>
       </div>
