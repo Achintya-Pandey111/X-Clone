@@ -38,11 +38,17 @@ function FollowingFeed() {
     }));
   };
 
+  const handleDelete = (postId) => {
+    if (window.confirm('Are you sure you want to delete this post?')) {
+      setPosts(prevPosts => prevPosts.filter(post => post.id !== postId));
+    }
+  };
+
   return (
     <div className="posts-list">
       {posts.length > 0 ? (
         posts.map((post) => (
-          <Post key={post.id} {...post} onLike={handleLike} />
+          <Post key={post.id} {...post} onLike={handleLike} onDelete={handleDelete} />
         ))
       ) : (
         <div style={{ padding: '20px', textAlign: 'center', color: 'var(--text-secondary)' }}>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../AuthContext';
 
-const Post = ({ id, user, handle, content, timestamp, stats, onLike }) => {
+const Post = ({ id, user, handle, content, timestamp, stats, onLike, onDelete }) => {
   const { user: currentUser } = useAuth();
   const [showComments, setShowComments] = useState(false);
   const [commentText, setCommentText] = useState('');
@@ -26,11 +26,31 @@ const Post = ({ id, user, handle, content, timestamp, stats, onLike }) => {
   };
   
   return (
-    <div className="post-skeleton" style={{ animation: 'none', cursor: 'default', display: 'block' }}>
+    <div className="post-skeleton" style={{ animation: 'none', cursor: 'default', display: 'block', position: 'relative' }}>
+      {onDelete && (
+        <button 
+          onClick={() => onDelete(id)}
+          style={{ 
+            position: 'absolute', 
+            top: '12px', 
+            right: '12px', 
+            background: 'transparent', 
+            border: 'none', 
+            color: 'var(--text-secondary)', 
+            cursor: 'pointer',
+            fontSize: '18px',
+            padding: '4px',
+            zIndex: 1
+          }}
+          title="Delete Post"
+        >
+          🗑️
+        </button>
+      )}
       <div style={{ display: 'flex' }}>
         <div className="post-avatar" style={{ backgroundColor: '#555' }}></div>
         <div className="post-content">
-          <div className="post-header-info" style={{ display: 'flex', gap: '4px', marginBottom: '4px' }}>
+          <div className="post-header-info" style={{ display: 'flex', gap: '4px', marginBottom: '4px', paddingRight: '24px' }}>
             <span style={{ fontWeight: 700 }}>{user}</span>
             <span style={{ color: 'var(--text-secondary)' }}>{handle} · {timestamp}</span>
           </div>

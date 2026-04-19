@@ -91,6 +91,12 @@ function Feed() {
     setPosts([...posts, ...morePosts]);
   };
 
+  const handleDelete = (postId) => {
+    if (window.confirm('Are you sure you want to delete this post?')) {
+      setPosts(prevPosts => prevPosts.filter(post => post.id !== postId));
+    }
+  };
+
   return (
     <div className="feed-container">
       <header className="feed-header">
@@ -141,7 +147,7 @@ function Feed() {
       {activeTab === 'for-you' ? (
         <div className="posts-list">
           {posts.map((post) => (
-            <Post key={post.id} {...post} onLike={handleLike} />
+            <Post key={post.id} {...post} onLike={handleLike} onDelete={handleDelete} />
           ))}
           
           <div className="show-more-posts" onClick={loadMorePosts} style={{ padding: '16px', textAlign: 'center', color: 'var(--accent)', cursor: 'pointer', borderBottom: '1px solid var(--border)' }}>
