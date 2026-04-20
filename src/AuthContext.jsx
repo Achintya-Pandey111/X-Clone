@@ -30,8 +30,14 @@ export const AuthProvider = ({ children }) => {
     login(userData);
   };
 
+  const updateUser = (updatedData) => {
+    const newUser = { ...user, ...updatedData };
+    setUser(newUser);
+    localStorage.setItem('x_clone_user', JSON.stringify(newUser));
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, register, loading }}>
+    <AuthContext.Provider value={{ user, login, logout, register, updateUser, loading }}>
       {!loading && children}
     </AuthContext.Provider>
   );
