@@ -24,6 +24,12 @@ const Post = ({ id, user, handle, content, timestamp, stats, onLike, onDelete })
     setComments([newComment, ...comments]);
     setCommentText('');
   };
+
+  const handleDeleteComment = (commentId) => {
+    if (window.confirm('Delete this comment?')) {
+      setComments(prevComments => prevComments.filter(comment => comment.id !== commentId));
+    }
+  };
   
   return (
     <div className="post-skeleton" style={{ animation: 'none', cursor: 'default', display: 'block', position: 'relative' }}>
@@ -109,12 +115,29 @@ const Post = ({ id, user, handle, content, timestamp, stats, onLike, onDelete })
 
           <div className="comments-list">
             {comments.map(comment => (
-              <div key={comment.id} className="comment-item">
+              <div key={comment.id} className="comment-item" style={{ position: 'relative' }}>
                 <div className="comment-avatar"></div>
-                <div className="comment-content">
-                  <div className="comment-header">
-                    <span style={{ fontWeight: 700 }}>{comment.user}</span>
-                    <span style={{ color: 'var(--text-secondary)' }}>{comment.handle} · {comment.timestamp}</span>
+                <div className="comment-content" style={{ flex: 1 }}>
+                  <div className="comment-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                      <span style={{ fontWeight: 700 }}>{comment.user}</span>
+                      <span style={{ color: 'var(--text-secondary)', marginLeft: '4px' }}>{comment.handle} · {comment.timestamp}</span>
+                    </div>
+                    <button 
+                      onClick={() => handleDeleteComment(comment.id)}
+                      style={{ 
+                        background: 'transparent', 
+                        border: 'none', 
+                        color: 'var(--text-secondary)', 
+                        cursor: 'pointer',
+                        fontSize: '14px',
+                        padding: '4px',
+                        opacity: 0.6
+                      }}
+                      title="Delete Comment"
+                    >
+                      🗑️
+                    </button>
                   </div>
                   <div className="comment-text">{comment.text}</div>
                 </div>
