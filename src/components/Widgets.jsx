@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const TrendItem = ({ category, title, posts }) => (
   <div className="trend-item">
@@ -11,7 +11,35 @@ const TrendItem = ({ category, title, posts }) => (
   </div>
 );
 
+const FollowItem = ({ id, name, handle, avatarColor, isFollowing, onFollow }) => (
+  <div className="follow-item">
+    <div className="avatar-placeholder" style={{ backgroundColor: avatarColor }}></div>
+    <div className="user-info">
+      <div className="name">{name}</div>
+      <div className="handle">{handle}</div>
+    </div>
+    <button 
+      className={`follow-btn ${isFollowing ? 'following' : ''}`}
+      onClick={() => onFollow(id)}
+    >
+      {isFollowing ? 'Following' : 'Follow'}
+    </button>
+  </div>
+);
+
 function Widgets() {
+  const [suggestedUsers, setSuggestedUsers] = useState([
+    { id: 1, name: 'Elon Musk', handle: '@elonmusk', avatarColor: '#ff4500', isFollowing: false },
+    { id: 2, name: 'X', handle: '@X', avatarColor: '#000000', isFollowing: false },
+    { id: 3, name: 'Bill Gates', handle: '@BillGates', avatarColor: '#00a4ef', isFollowing: false }
+  ]);
+
+  const handleFollow = (userId) => {
+    setSuggestedUsers(prev => prev.map(user => 
+      user.id === userId ? { ...user, isFollowing: !user.isFollowing } : user
+    ));
+  };
+
   return (
     <div className="widgets-container">
       <div className="search-bar">
@@ -43,22 +71,13 @@ function Widgets() {
       <div className="widget-card" style={{ padding: '0' }}>
         <h2 style={{ padding: '16px 16px 4px 16px' }}>Who to follow</h2>
         <div style={{ padding: '0 16px' }}>
-          <div className="follow-item">
-            <div className="avatar-placeholder" style={{ backgroundColor: '#ff4500' }}></div>
-            <div className="user-info">
-              <div className="name">Elon Musk</div>
-              <div className="handle">@elonmusk</div>
-            </div>
-            <button className="follow-btn">Follow</button>
-          </div>
-          <div className="follow-item">
-            <div className="avatar-placeholder" style={{ backgroundColor: '#000000', border: '1px solid var(--border)' }}></div>
-            <div className="user-info">
-              <div className="name">X</div>
-              <div className="handle">@X</div>
-            </div>
-            <button className="follow-btn">Follow</button>
-          </div>
+          {suggestedUsers.map(user => (
+            <FollowItem 
+              key={user.id} 
+              {...user} 
+              onFollow={handleFollow} 
+            />
+          ))}
         </div>
         <div className="show-more" style={{ padding: '16px', borderBottomLeftRadius: '16px', borderBottomRightRadius: '16px' }}>
           Show more
@@ -69,3 +88,4 @@ function Widgets() {
 }
 
 export default Widgets;
+
