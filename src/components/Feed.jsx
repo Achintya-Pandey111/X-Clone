@@ -1,50 +1,11 @@
 import React, { useState } from 'react';
 import { useAuth } from '../AuthContext';
-
-const Post = ({ id, user, handle, content, timestamp, stats, onLike }) => {
-  const isLiked = stats.isLiked;
-  
-  return (
-    <div className="post-skeleton" style={{ animation: 'none', cursor: 'default' }}>
-      <div className="post-avatar" style={{ backgroundColor: '#555' }}></div>
-      <div className="post-content">
-        <div className="post-header-info" style={{ display: 'flex', gap: '4px', marginBottom: '4px' }}>
-          <span style={{ fontWeight: 700 }}>{user}</span>
-          <span style={{ color: 'var(--text-secondary)' }}>{handle} · {timestamp}</span>
-        </div>
-        <div className="post-text" style={{ fontSize: '15px', lineHeight: '20px', marginBottom: '12px' }}>
-          {content}
-        </div>
-        <div className="post-actions">
-          <div className="action-item">
-            <span className="action-icon">💬</span> 
-            <span style={{ color: 'var(--text-secondary)', fontSize: '13px' }}>{stats.replies}</span>
-          </div>
-          <div className="action-item">
-            <span className="action-icon">🔁</span>
-            <span style={{ color: 'var(--text-secondary)', fontSize: '13px' }}>{stats.retweets}</span>
-          </div>
-          <div 
-            className={`action-item ${isLiked ? 'liked' : ''}`} 
-            onClick={() => onLike(id)}
-          >
-            <span className="action-icon">
-              {isLiked ? '❤️' : '🤍'}
-            </span> 
-            <span style={{ fontSize: '13px' }}>{stats.likes}</span>
-          </div>
-          <div className="action-item">
-            <span className="action-icon">📊</span>
-            <span style={{ color: 'var(--text-secondary)', fontSize: '13px' }}>{stats.views}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+import Post from './Post';
+import FollowingFeed from './FollowingFeed';
 
 function Feed() {
   const { user: currentUser } = useAuth();
+  const [activeTab, setActiveTab] = useState('for-you');
   const [posts, setPosts] = useState([
     {
       id: 1,
@@ -92,8 +53,18 @@ function Feed() {
   return (
     <div className="feed-container">
       <header className="feed-header">
-        <div className="tab active">For you</div>
-        <div className="tab">Following</div>
+        <div 
+          className={`tab ${activeTab === 'for-you' ? 'active' : ''}`} 
+          onClick={() => setActiveTab('for-you')}
+        >
+          For you
+        </div>
+        <div 
+          className={`tab ${activeTab === 'following' ? 'active' : ''}`} 
+          onClick={() => setActiveTab('following')}
+        >
+          Following
+        </div>
       </header>
       
       <div className="composer">
@@ -104,20 +75,24 @@ function Feed() {
         <button className="post-btn-small">Post</button>
       </div>
 
-      <div className="posts-list">
-        {posts.map((post) => (
-          <Post key={post.id} {...post} onLike={handleLike} />
-        ))}
-        {/* Skeletons for the "rest" of the feed */}
-        <div className="post-skeleton">
-          <div className="post-avatar"></div>
-          <div className="post-content">
-            <div className="post-header-line"></div>
-            <div className="post-text-line"></div>
-            <div className="post-text-line short"></div>
+      {activeTab === 'for-you' ? (
+        <div className="posts-list">
+          {posts.map((post) => (
+            <Post key={post.id} {...post} onLike={handleLike} />
+          ))}
+          {/* Skeletons for the "rest" of the feed */}
+          <div className="post-skeleton">
+            <div className="post-avatar"></div>
+            <div className="post-content">
+              <div className="post-header-line"></div>
+              <div className="post-text-line"></div>
+              <div className="post-text-line short"></div>
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <FollowingFeed />
+      )}
     </div>
   );
 }
