@@ -40,7 +40,12 @@ function Sidebar({ activeTab, setActiveTab }) {
           icon={icons.home} 
           onClick={() => setActiveTab('home')} 
         />
-        <SidebarItem label="Explore" icon={icons.explore} />
+        <SidebarItem 
+          label="Explore" 
+          active={activeTab === 'explore'} 
+          icon={icons.explore} 
+          onClick={() => setActiveTab('explore')} 
+        />
         <SidebarItem 
           label="Notifications" 
           active={activeTab === 'notifications'} 

@@ -809,3 +809,199 @@ nav {
   font-size: 14px;
   margin-bottom: 8px;
 }
+
+/* Explore Styling */
+.explore-container {
+  width: 100%;
+}
+
+.explore-header {
+  position: sticky;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(12px);
+  z-index: 10;
+  border-bottom: 1px solid var(--border);
+}
+
+.explore-search-wrapper {
+  padding: 6px 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.explore-search-wrapper .search-bar {
+  flex: 1;
+  background-color: #202327;
+  padding: 10px 16px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+}
+
+.explore-search-wrapper .search-bar input {
+  background: transparent;
+  border: none;
+  color: white;
+  margin-left: 12px;
+  outline: none;
+  font-size: 15px;
+  width: 100%;
+}
+
+.settings-icon {
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-icon:hover {
+  background-color: var(--hover-bg);
+}
+
+.explore-tabs {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.explore-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.explore-tab {
+  padding: 16px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  position: relative;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+}
+
+.explore-tab:hover {
+  background-color: var(--hover-bg);
+}
+
+.explore-tab.active {
+  color: var(--text-primary);
+}
+
+.explore-tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 4px;
+  background-color: var(--accent);
+  border-radius: 9999px;
+}
+
+.explore-hero {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  color: white;
+}
+
+.hero-label {
+  font-size: 13px;
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+
+.hero-title {
+  font-size: 23px;
+  font-weight: 800;
+}
+
+.explore-trends {
+  padding: 16px 0;
+}
+
+.trends-title {
+  padding: 0 16px 12px;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.explore-trend-item {
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.explore-trend-item:hover {
+  background-color: var(--hover-bg);
+}
+
+.trend-content {
+  flex: 1;
+}
+
+.trend-meta {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.trend-title {
+  font-weight: 700;
+  font-size: 15px;
+  margin: 2px 0;
+}
+
+.trend-posts {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.trend-image {
+  width: 68px;
+  height: 68px;
+  margin-left: 12px;
+}
+
+.trend-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.show-more-trends {
+  padding: 16px;
+  color: var(--accent);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.show-more-trends:hover {
+  background-color: var(--hover-bg);
+}

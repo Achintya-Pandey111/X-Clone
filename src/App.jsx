@@ -4,6 +4,7 @@ import Feed from './components/Feed';
 import Widgets from './components/Widgets';
 import Register from './components/Register';
 import Notifications from './components/Notifications';
+import Explore from './components/Explore';
 import { useAuth } from './AuthContext';
 
 function App() {
@@ -14,11 +15,24 @@ function App() {
     return <Register />;
   }
 
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'home':
+        return <Feed />;
+      case 'explore':
+        return <Explore />;
+      case 'notifications':
+        return <Notifications />;
+      default:
+        return <Feed />;
+    }
+  };
+
   return (
     <div className="app">
       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
       <main className="feed">
-        {activeTab === 'home' ? <Feed /> : <Notifications />}
+        {renderContent()}
       </main>
       <aside className="widgets">
         <Widgets />
