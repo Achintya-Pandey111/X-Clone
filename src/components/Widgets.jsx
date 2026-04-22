@@ -28,10 +28,17 @@ const FollowItem = ({ id, name, handle, avatarColor, isFollowing, onFollow }) =>
 );
 
 function Widgets() {
+  const [searchQuery, setSearchQuery] = useState('');
   const [suggestedUsers, setSuggestedUsers] = useState([
     { id: 1, name: 'Elon Musk', handle: '@elonmusk', avatarColor: '#ff4500', isFollowing: false },
     { id: 2, name: 'X', handle: '@X', avatarColor: '#000000', isFollowing: false },
-    { id: 3, name: 'Bill Gates', handle: '@BillGates', avatarColor: '#00a4ef', isFollowing: false }
+    { id: 3, name: 'Bill Gates', handle: '@BillGates', avatarColor: '#00a4ef', isFollowing: false },
+    { id: 4, name: 'SpaceX', handle: '@SpaceX', avatarColor: '#005288', isFollowing: false },
+    { id: 5, name: 'NASA', handle: '@NASA', avatarColor: '#E03C31', isFollowing: false },
+    { id: 6, name: 'React', handle: '@reactjs', avatarColor: '#61dafb', isFollowing: false },
+    { id: 7, name: 'TechCrunch', handle: '@TechCrunch', avatarColor: '#029d00', isFollowing: false },
+    { id: 8, name: 'Google', handle: '@Google', avatarColor: '#4285F4', isFollowing: false },
+    { id: 9, name: 'Apple', handle: '@Apple', avatarColor: '#A2AAAD', isFollowing: false }
   ]);
 
   const handleFollow = (userId) => {
@@ -40,13 +47,23 @@ function Widgets() {
     ));
   };
 
+  const filteredUsers = suggestedUsers.filter(user => 
+    user.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    user.handle.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="widgets-container">
       <div className="search-bar">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="var(--text-secondary)">
           <path d="M10.25 3.75c-3.59 0-6.5 2.91-6.5 6.5s2.91 6.5 6.5 6.5c1.795 0 3.419-.726 4.596-1.904 1.178-1.177 1.904-2.801 1.904-4.596 0-3.59-2.91-6.5-6.5-6.5zm-8.5 6.5c0-4.694 3.806-8.5 8.5-8.5s8.5 3.806 8.5 8.5c0 1.986-.682 3.815-1.824 5.262l4.781 4.781-1.414 1.414-4.781-4.781c-1.447 1.142-3.276 1.824-5.262 1.824-4.694 0-8.5-3.806-8.5-8.5z"/>
         </svg>
-        <input type="text" placeholder="Search" />
+        <input 
+          type="text" 
+          placeholder="Search accounts" 
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
       </div>
 
       <div className="widget-card">
@@ -69,19 +86,29 @@ function Widgets() {
       </div>
 
       <div className="widget-card" style={{ padding: '0' }}>
-        <h2 style={{ padding: '16px 16px 4px 16px' }}>Who to follow</h2>
+        <h2 style={{ padding: '16px 16px 4px 16px' }}>
+          {searchQuery ? 'Search results' : 'Who to follow'}
+        </h2>
         <div style={{ padding: '0 16px' }}>
-          {suggestedUsers.map(user => (
-            <FollowItem 
-              key={user.id} 
-              {...user} 
-              onFollow={handleFollow} 
-            />
-          ))}
+          {filteredUsers.length > 0 ? (
+            filteredUsers.slice(0, searchQuery ? 10 : 3).map(user => (
+              <FollowItem 
+                key={user.id} 
+                {...user} 
+                onFollow={handleFollow} 
+              />
+            ))
+          ) : (
+            <div style={{ padding: '16px', color: 'var(--text-secondary)', textAlign: 'center' }}>
+              No results for "{searchQuery}"
+            </div>
+          )}
         </div>
-        <div className="show-more" style={{ padding: '16px', borderBottomLeftRadius: '16px', borderBottomRightRadius: '16px' }}>
-          Show more
-        </div>
+        {!searchQuery && (
+          <div className="show-more" style={{ padding: '16px', borderBottomLeftRadius: '16px', borderBottomRightRadius: '16px' }}>
+            Show more
+          </div>
+        )}
       </div>
     </div>
   );
