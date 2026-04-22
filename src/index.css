@@ -646,3 +646,53 @@ nav {
 .logout-popup:hover {
   background-color: var(--hover-bg);
 }
+
+.comments-section {
+  border-top: 1px solid var(--border);
+  margin-top: 12px;
+  padding-top: 12px;
+}
+
+.comment-input-container {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.comment-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 15px;
+  outline: none;
+}
+
+.comment-item {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.comment-avatar {
+  width: 32px;
+  height: 32px;
+  background-color: #444;
+  border-radius: 50%;
+}
+
+.comment-content {
+  flex: 1;
+}
+
+.comment-header {
+  display: flex;
+  gap: 4px;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.comment-text {
+  font-size: 14px;
+  line-height: 18px;
+}
