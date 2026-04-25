@@ -75,7 +75,9 @@ const Register = () => {
                 <div className="date-selectors">
                   <select defaultValue="">
                     <option value="" disabled>Month</option>
-                    <option>January</option><option>February</option><option>March</option>
+                    {['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map(month => (
+                      <option key={month} value={month}>{month}</option>
+                    ))}
                   </select>
                   <select defaultValue="">
                     <option value="" disabled>Day</option>
