@@ -62,8 +62,12 @@ function Sidebar({ activeTab, setActiveTab }) {
       <button className="post-btn">Post</button>
       
       <div className="profile-mini" onClick={() => setShowLogout(!showLogout)}>
-        <div className="avatar-placeholder" style={{ backgroundColor: '#1d9bf0' }}>
-          {user?.name?.[0].toUpperCase()}
+        <div className="avatar-placeholder" style={{ backgroundColor: '#1d9bf0', overflow: 'hidden' }}>
+          {user?.avatar ? (
+            <img src={user.avatar} alt={user.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          ) : (
+            user?.name?.[0].toUpperCase()
+          )}
         </div>
         <div className="profile-info">
           <div className="name">{user?.name}</div>

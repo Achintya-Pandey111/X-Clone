@@ -5,10 +5,24 @@ function EditProfileModal({ onClose }) {
   const { user, updateUser } = useAuth();
   const [name, setName] = useState(user?.name || '');
   const [bio, setBio] = useState(user?.bio || '');
+  const [newAvatar, setNewAvatar] = useState(user?.avatar || null);
+  const [newBanner, setNewBanner] = useState(user?.banner || null);
   const [showPasswordChange, setShowPasswordChange] = useState(false);
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+
+  const handleImageUpload = (e, type) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (type === 'avatar') setNewAvatar(reader.result);
+        if (type === 'banner') setNewBanner(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,7 +38,7 @@ function EditProfileModal({ onClose }) {
       }
     }
 
-    const updates = { name, bio };
+    const updates = { name, bio, avatar: newAvatar, banner: newBanner };
     if (showPasswordChange && newPassword) {
       updates.password = newPassword;
     }
@@ -46,23 +60,31 @@ function EditProfileModal({ onClose }) {
 
         <div className="edit-profile-images">
           <div className="edit-banner">
-            <img src={user?.banner || 'https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&q=80&w=600&h=200'} alt="Banner" />
-            <div className="image-upload-overlay">
+            <img src={newBanner || user?.banner || 'https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&q=80&w=600&h=200'} alt="Banner" />
+            <label className="image-upload-overlay" style={{ cursor: 'pointer' }}>
+              <input type="file" accept="image/*" style={{ display: 'none' }} onChange={(e) => handleImageUpload(e, 'banner')} />
               <svg viewBox="0 0 24 24" width="24" height="24" fill="white">
                 <path d="M9.697 3H11c.552 0 1 .448 1 1s-.448 1-1 1H9.697c-.382 0-.733.218-.911.555L7.33 8.36C7.152 8.697 6.801 8.915 6.419 8.915H4c-1.105 0-2 .895-2 2v9c0 1.105.895 2 2 2h16c1.105 0 2-.895 2-2v-9c0-1.105-.895-2-2-2h-2.419c-.382 0-.733-.218-.911-.555L15.214 5.555C15.036 5.218 14.685 5 14.303 5H13c-.552 0-1-.448-1-1s.448-1 1-1h1.303c1.146 0 2.199.654 2.73 1.66l1.353 2.59H20c2.209 0 4 1.791 4 4v9c0 2.209-1.791 4-4 4H4c-2.209 0-4-1.791-4-4v-9c0-2.209 1.791-4 4-4h2.614l1.353-2.59C8.5 3.654 9.551 3 10.697 3zM12 19c-2.761 0-5-2.239-5-5s2.239-5 5-5 5 2.239 5 5-2.239 5-5 5zm0-2c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z" />
               </svg>
-            </div>
+            </label>
           </div>
           <div className="edit-avatar">
             <div className="avatar-wrapper">
-              <div className="avatar-placeholder" style={{ backgroundColor: '#1d9bf0', width: '100%', height: '100%', fontSize: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                {user?.name?.[0].toUpperCase()}
+              <div className="avatar-placeholder" style={{ backgroundColor: '#1d9bf0', width: '100%', height: '100%', fontSize: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                {newAvatar ? (
+                  <img src={newAvatar} alt="Avatar Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                ) : user?.avatar ? (
+                  <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                ) : (
+                  user?.name?.[0].toUpperCase()
+                )}
               </div>
-              <div className="image-upload-overlay">
+              <label className="image-upload-overlay" style={{ cursor: 'pointer' }}>
+                <input type="file" accept="image/*" style={{ display: 'none' }} onChange={(e) => handleImageUpload(e, 'avatar')} />
                 <svg viewBox="0 0 24 24" width="24" height="24" fill="white">
                   <path d="M9.697 3H11c.552 0 1 .448 1 1s-.448 1-1 1H9.697c-.382 0-.733.218-.911.555L7.33 8.36C7.152 8.697 6.801 8.915 6.419 8.915H4c-1.105 0-2 .895-2 2v9c0 1.105.895 2 2 2h16c1.105 0 2-.895 2-2v-9c0-1.105-.895-2-2-2h-2.419c-.382 0-.733-.218-.911-.555L15.214 5.555C15.036 5.218 14.685 5 14.303 5H13c-.552 0-1-.448-1-1s.448-1 1-1h1.303c1.146 0 2.199.654 2.73 1.66l1.353 2.59H20c2.209 0 4 1.791 4 4v9c0 2.209-1.791 4-4 4H4c-2.209 0-4-1.791-4-4v-9c0-2.209 1.791-4 4-4h2.614l1.353-2.59C8.5 3.654 9.551 3 10.697 3zM12 19c-2.761 0-5-2.239-5-5s2.239-5 5-5 5 2.239 5 5-2.239 5-5 5zm0-2c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z" />
                 </svg>
-              </div>
+              </label>
             </div>
           </div>
         </div>

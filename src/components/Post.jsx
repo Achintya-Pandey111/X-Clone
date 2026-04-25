@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { useAuth } from '../AuthContext';
 
-const Post = ({ id, user, handle, content, timestamp, stats, onLike, onDelete }) => {
+const Post = ({ id, user, handle, avatar, image, content, timestamp, stats, onLike, onDelete }) => {
   const { user: currentUser } = useAuth();
   const [showComments, setShowComments] = useState(false);
   const [commentText, setCommentText] = useState('');
   const [comments, setComments] = useState([]);
   
   const isLiked = stats.isLiked;
+  const currentUserHandle = `@${currentUser?.email?.split('@')[0] || 'guest'}`;
+  const isOwnPost = handle === currentUserHandle;
+  const displayAvatar = isOwnPost ? (currentUser?.avatar || avatar) : avatar;
 
   const handleAddComment = (e) => {
     e.preventDefault();
@@ -16,7 +19,8 @@ const Post = ({ id, user, handle, content, timestamp, stats, onLike, onDelete })
     const newComment = {
       id: Date.now(),
       user: currentUser?.name || 'Guest',
-      handle: currentUser?.handle || '@guest',
+      handle: currentUserHandle,
+      avatar: currentUser?.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser?.name || 'Guest'}`,
       text: commentText,
       timestamp: 'now'
     };
@@ -54,7 +58,13 @@ const Post = ({ id, user, handle, content, timestamp, stats, onLike, onDelete })
         </button>
       )}
       <div style={{ display: 'flex' }}>
-        <div className="post-avatar" style={{ backgroundColor: '#555' }}></div>
+        <div className="post-avatar" style={{ backgroundColor: displayAvatar ? 'transparent' : '#555', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {displayAvatar ? (
+            <img src={displayAvatar} alt={user} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          ) : (
+            <span style={{ color: 'white', fontWeight: 'bold' }}>{user?.[0]?.toUpperCase()}</span>
+          )}
+        </div>
         <div className="post-content">
           <div className="post-header-info" style={{ display: 'flex', gap: '4px', marginBottom: '4px', paddingRight: '24px' }}>
             <span style={{ fontWeight: 700 }}>{user}</span>
@@ -63,6 +73,11 @@ const Post = ({ id, user, handle, content, timestamp, stats, onLike, onDelete })
           <div className="post-text" style={{ fontSize: '15px', lineHeight: '20px', marginBottom: '12px' }}>
             {content}
           </div>
+          {image && (
+            <div className="post-image-container">
+              <img src={image} alt="post content" />
+            </div>
+          )}
           <div className="post-actions">
             <div className="action-item" onClick={() => setShowComments(!showComments)}>
               <span className="action-icon">💬</span> 
@@ -116,7 +131,13 @@ const Post = ({ id, user, handle, content, timestamp, stats, onLike, onDelete })
           <div className="comments-list">
             {comments.map(comment => (
               <div key={comment.id} className="comment-item" style={{ position: 'relative' }}>
-                <div className="comment-avatar"></div>
+                <div className="comment-avatar" style={{ backgroundColor: comment.avatar ? 'transparent' : '#444', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {comment.avatar ? (
+                    <img src={comment.avatar} alt={comment.user} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ) : (
+                    <span style={{ color: 'white', fontSize: '12px', fontWeight: 'bold' }}>{comment.user?.[0]?.toUpperCase()}</span>
+                  )}
+                </div>
                 <div className="comment-content" style={{ flex: 1 }}>
                   <div className="comment-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div>

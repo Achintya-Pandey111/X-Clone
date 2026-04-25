@@ -7,6 +7,8 @@ function FollowingFeed() {
       id: 1,
       user: 'Elon Musk',
       handle: '@elonmusk',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=elonmusk',
+      image: 'https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&q=80&w=600',
       content: 'Following feed is now live! 🚀',
       timestamp: '1h',
       stats: { replies: '10K', retweets: '20K', likes: 150000, views: '10M', isLiked: false }
@@ -15,6 +17,8 @@ function FollowingFeed() {
       id: 2,
       user: 'X',
       handle: '@X',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=X',
+      image: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80&w=600',
       content: 'Stay connected with the people you follow.',
       timestamp: '3h',
       stats: { replies: '500', retweets: '2K', likes: 10000, views: '1M', isLiked: true }
@@ -48,7 +52,12 @@ function FollowingFeed() {
     <div className="posts-list">
       {posts.length > 0 ? (
         posts.map((post) => (
-          <Post key={post.id} {...post} onLike={handleLike} onDelete={handleDelete} />
+          <Post 
+            key={post.id} 
+            {...post} 
+            onLike={handleLike} 
+            onDelete={post.isUserPost ? handleDelete : null} 
+          />
         ))
       ) : (
         <div style={{ padding: '20px', textAlign: 'center', color: 'var(--text-secondary)' }}>

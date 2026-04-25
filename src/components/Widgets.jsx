@@ -11,9 +11,15 @@ const TrendItem = ({ category, title, posts }) => (
   </div>
 );
 
-const FollowItem = ({ id, name, handle, avatarColor, isFollowing, onFollow }) => (
+const FollowItem = ({ id, name, handle, avatar, avatarColor, isFollowing, onFollow }) => (
   <div className="follow-item">
-    <div className="avatar-placeholder" style={{ backgroundColor: avatarColor }}></div>
+    <div className="avatar-placeholder" style={{ backgroundColor: avatar ? 'transparent' : avatarColor, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      {avatar ? (
+        <img src={avatar} alt={name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+      ) : (
+        <span style={{ color: 'white', fontWeight: 'bold' }}>{name[0]}</span>
+      )}
+    </div>
     <div className="user-info">
       <div className="name">{name}</div>
       <div className="handle">{handle}</div>
@@ -30,15 +36,25 @@ const FollowItem = ({ id, name, handle, avatarColor, isFollowing, onFollow }) =>
 function Widgets() {
   const [searchQuery, setSearchQuery] = useState('');
   const [suggestedUsers, setSuggestedUsers] = useState([
-    { id: 1, name: 'Elon Musk', handle: '@elonmusk', avatarColor: '#ff4500', isFollowing: false },
-    { id: 2, name: 'X', handle: '@X', avatarColor: '#000000', isFollowing: false },
-    { id: 3, name: 'Bill Gates', handle: '@BillGates', avatarColor: '#00a4ef', isFollowing: false },
-    { id: 4, name: 'SpaceX', handle: '@SpaceX', avatarColor: '#005288', isFollowing: false },
-    { id: 5, name: 'NASA', handle: '@NASA', avatarColor: '#E03C31', isFollowing: false },
-    { id: 6, name: 'React', handle: '@reactjs', avatarColor: '#61dafb', isFollowing: false },
-    { id: 7, name: 'TechCrunch', handle: '@TechCrunch', avatarColor: '#029d00', isFollowing: false },
-    { id: 8, name: 'Google', handle: '@Google', avatarColor: '#4285F4', isFollowing: false },
-    { id: 9, name: 'Apple', handle: '@Apple', avatarColor: '#A2AAAD', isFollowing: false }
+    { id: 1, name: 'Elon Musk', handle: '@elonmusk', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=elonmusk', avatarColor: '#ff4500', isFollowing: false },
+    { id: 2, name: 'X', handle: '@X', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=X', avatarColor: '#000000', isFollowing: false },
+    { id: 3, name: 'Bill Gates', handle: '@BillGates', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=BillGates', avatarColor: '#00a4ef', isFollowing: false },
+    { id: 4, name: 'SpaceX', handle: '@SpaceX', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=SpaceX', avatarColor: '#005288', isFollowing: false },
+    { id: 5, name: 'NASA', handle: '@NASA', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=NASA', avatarColor: '#E03C31', isFollowing: false },
+    { id: 6, name: 'React', handle: '@reactjs', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=reactjs', avatarColor: '#61dafb', isFollowing: false },
+    { id: 7, name: 'TechCrunch', handle: '@TechCrunch', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=TechCrunch', avatarColor: '#029d00', isFollowing: false },
+    { id: 8, name: 'Google', handle: '@Google', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Google', avatarColor: '#4285F4', isFollowing: false },
+    { id: 9, name: 'Apple', handle: '@Apple', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Apple', avatarColor: '#A2AAAD', isFollowing: false },
+    { id: 10, name: 'OpenAI', handle: '@OpenAI', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=OpenAI', avatarColor: '#74aa9c', isFollowing: false },
+    { id: 11, name: 'Microsoft', handle: '@Microsoft', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Microsoft', avatarColor: '#f25022', isFollowing: false },
+    { id: 12, name: 'Vercel', handle: '@vercel', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=vercel', avatarColor: '#000000', isFollowing: false },
+    { id: 13, name: 'GitHub', handle: '@github', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=github', avatarColor: '#181717', isFollowing: false },
+    { id: 14, name: 'Meta', handle: '@Meta', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Meta', avatarColor: '#0668E1', isFollowing: false },
+    { id: 15, name: 'Netflix', handle: '@netflix', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=netflix', avatarColor: '#E50914', isFollowing: false },
+    { id: 16, name: 'Amazon', handle: '@amazon', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=amazon', avatarColor: '#FF9900', isFollowing: false },
+    { id: 17, name: 'Disney', handle: '@Disney', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Disney', avatarColor: '#113CCF', isFollowing: false },
+    { id: 18, name: 'Tesla', handle: '@Tesla', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Tesla', avatarColor: '#CC0000', isFollowing: false },
+    { id: 19, name: 'Android', handle: '@Android', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Android', avatarColor: '#3DDC84', isFollowing: false }
   ]);
 
   const handleFollow = (userId) => {

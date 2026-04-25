@@ -7,6 +7,8 @@ import Notifications from './components/Notifications';
 import Explore from './components/Explore';
 import { useAuth } from './AuthContext';
 
+import MobileNav from './components/MobileNav';
+
 function App() {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('home');
@@ -37,6 +39,7 @@ function App() {
       <aside className="widgets">
         <Widgets />
       </aside>
+      <MobileNav activeTab={activeTab} setActiveTab={setActiveTab} />
     </div>
   );
 }
