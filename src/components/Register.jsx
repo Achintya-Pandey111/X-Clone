@@ -27,7 +27,13 @@ const Register = () => {
     <div className="register-overlay">
       <div className="register-container">
         <div className="register-header">
-          <div className="register-logo">𝕏</div>
+          <div className="register-logo">
+            <img 
+              src="https://img.freepik.com/free-vector/new-2023-twitter-logo-x-icon-design_1017-45418.jpg?w=360" 
+              alt="X Logo" 
+              style={{ width: '40px', height: '40px', borderRadius: '6px' }} 
+            />
+          </div>
         </div>
         <div className="register-content">
           <h1>{isLogin ? 'Log in to X' : 'Create your account'}</h1>

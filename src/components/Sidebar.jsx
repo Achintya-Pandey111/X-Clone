@@ -28,10 +28,12 @@ function Sidebar({ activeTab, setActiveTab }) {
 
   return (
     <div className="sidebar-content">
-      <div className="logo" onClick={() => setActiveTab('home')} style={{ cursor: 'pointer' }}>
-        <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
-          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/>
-        </svg>
+      <div className="logo" onClick={() => setActiveTab('home')} style={{ cursor: 'pointer', padding: '8px' }}>
+        <img 
+          src="https://img.freepik.com/free-vector/new-2023-twitter-logo-x-icon-design_1017-45418.jpg?w=360" 
+          alt="X Logo" 
+          style={{ width: '32px', height: '32px', borderRadius: '4px', objectFit: 'cover' }} 
+        />
       </div>
       <nav>
         <SidebarItem 
