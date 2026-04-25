@@ -358,6 +358,14 @@ function Feed() {
 
   const [postText, setPostText] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+
+  const emojis = ['😀', '😂', '😍', '😊', '🤔', '🔥', '🚀', '✨', '🙌', '💯', '❤️', '👍', '😭', '😎', '🎉', '👀', '📍', '✅', '👋', '🌟'];
+
+  const addEmoji = (emoji) => {
+    setPostText(prev => prev + emoji);
+    setShowEmojiPicker(false);
+  };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -447,7 +455,7 @@ function Feed() {
         <div className="composer-input-container" style={{ flex: 1 }}>
           <textarea 
             className="composer-textarea" 
-            placeholder="What is happening?!"
+            placeholder="What is happening?"
             value={postText}
             onChange={(e) => setPostText(e.target.value)}
             style={{ 
@@ -498,7 +506,28 @@ function Feed() {
                 <span title="Media">🖼️</span>
               </label>
               <span title="Poll">📊</span> 
-              <span title="Emoji">😀</span> 
+              <div style={{ position: 'relative' }}>
+                <span 
+                  title="Emoji" 
+                  onClick={() => setShowEmojiPicker(!showEmojiPicker)} 
+                  style={{ cursor: 'pointer' }}
+                >
+                  😀
+                </span>
+                {showEmojiPicker && (
+                  <div className="emoji-picker-dropdown">
+                    {emojis.map(emoji => (
+                      <span 
+                        key={emoji} 
+                        onClick={() => addEmoji(emoji)}
+                        className="emoji-item"
+                      >
+                        {emoji}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
               <span title="Location">📍</span>
             </div>
             <button type="submit" className="post-btn-small" disabled={!postText.trim() && !selectedImage}>Post</button>

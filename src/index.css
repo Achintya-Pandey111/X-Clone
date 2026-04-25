@@ -1377,3 +1377,34 @@ nav {
 .search-footer:hover {
   background-color: var(--hover-bg);
 }
+
+.emoji-picker-dropdown {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  z-index: 1000;
+  width: 200px;
+}
+
+.emoji-item {
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.emoji-item:hover {
+  background-color: var(--hover-bg);
+}
